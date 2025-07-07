@@ -40,9 +40,10 @@ int	main(int ac, char **av)
 	pthread_t	checker;
 	int			i;
 
+	if (ac < 5 || ac > 6)
+		return (0);
 	if (!check_args(ac, av) || !init_all(&data, ac, av))
 	{
-		cleanup(&data);
 		return (1);
 	}
 	i = 0;
