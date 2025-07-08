@@ -53,7 +53,7 @@ int	init_all(t_data *d, int ac, char **av)
 	d->count = atoi(av[1]);
 	if (d->count == 1)
 	{
-		write(2, "Error, only 1 philo\n", 21);
+		write(2, "0 1 died\n", 9);
 		return (0);
 	}
 	d->die = atoi(av[2]);
