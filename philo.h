@@ -6,7 +6,7 @@
 /*   By: alvalien <alvalien@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:16:55 by hzsurf            #+#    #+#             */
-/*   Updated: 2025/07/07 20:47:20 by alvalien         ###   ########.fr       */
+/*   Updated: 2025/07/09 10:38:09 by alvalien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 	pthread_mutex_t	meal_check;
+	pthread_mutex_t	stop_lock;
 	t_philo			*philos;
 }	t_data;
 
@@ -57,5 +58,7 @@ int		check_death(t_data *data);
 void	*monitor(void *arg);
 void	cleanup(t_data *d);
 void	destroy_mutexes(t_data *data);
+int		get_stop(t_data *data);
+void	set_stop(t_data *data, int val);
 
 #endif

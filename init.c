@@ -6,7 +6,7 @@
 /*   By: alvalien <alvalien@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:15:44 by hzsurf            #+#    #+#             */
-/*   Updated: 2025/07/07 21:38:59 by alvalien         ###   ########.fr       */
+/*   Updated: 2025/07/09 10:18:47 by alvalien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	init_mutexes(t_data *data)
 	if (pthread_mutex_init(&data->print, NULL))
 		return (0);
 	if (pthread_mutex_init(&data->meal_check, NULL))
+		return (0);
+	if (pthread_mutex_init(&data->stop_lock, NULL))
 		return (0);
 	return (1);
 }

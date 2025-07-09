@@ -6,7 +6,7 @@
 /*   By: alvalien <alvalien@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:15:56 by hzsurf            #+#    #+#             */
-/*   Updated: 2025/07/07 21:06:51 by alvalien         ###   ########.fr       */
+/*   Updated: 2025/07/09 10:02:13 by alvalien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ int	check_args(int ac, char **av)
 {
 	int	i;
 
-	if (ac != 5 && ac != 6)
-	{
-		write(2, "Invalid amount of arguments", 27);
-		return (0);
-	}
 	i = 1;
 	while (i < ac)
 	{

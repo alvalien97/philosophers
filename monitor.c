@@ -6,7 +6,7 @@
 /*   By: alvalien <alvalien@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:16:11 by hzsurf            #+#    #+#             */
-/*   Updated: 2025/07/07 20:23:50 by alvalien         ###   ########.fr       */
+/*   Updated: 2025/07/09 10:21:39 by alvalien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	check_death(t_data *data)
 		if ((now - last_meal) > data->die)
 		{
 			pthread_mutex_lock(&data->print);
-			if (!data->stop)
+			if (!get_stop(data))
 				printf("%ld %d died\n", now - data->start, i + 1);
-			data->stop = 1;
+			set_stop(data, 1);
 			pthread_mutex_unlock(&data->print);
 			return (1);
 		}
@@ -44,7 +44,7 @@ void	*monitor(void *arg)
 	t_data	*data;
 
 	data = (t_data *)arg;
-	while (!data->stop)
+	while (!get_stop(data))
 	{
 		if (check_death(data))
 			break ;

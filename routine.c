@@ -6,7 +6,7 @@
 /*   By: alvalien <alvalien@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:16:25 by hzsurf            #+#    #+#             */
-/*   Updated: 2025/07/07 20:20:16 by alvalien         ###   ########.fr       */
+/*   Updated: 2025/07/09 10:20:15 by alvalien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	*philo_routine(void *arg)
 	ph = (t_philo *)arg;
 	if (ph->id % 2 == 0)
 		usleep(1000);
-	while (!ph->data->stop)
+	while (!get_stop(ph->data))
 	{
 		philo_eat(ph);
 		pthread_mutex_lock(&ph->data->meal_check);

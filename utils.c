@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hzsurf <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: alvalien <alvalien@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:16:34 by hzsurf            #+#    #+#             */
-/*   Updated: 2025/07/07 20:16:36 by hzsurf           ###   ########.fr       */
+/*   Updated: 2025/07/09 10:38:27 by alvalien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,21 @@ void	print_action(t_philo *ph, char *str)
 		printf("%ld %d %s\n",
 			get_time() - ph->data->start, ph->id + 1, str);
 	pthread_mutex_unlock(&ph->data->print);
+}
+
+int	get_stop(t_data *data)
+{
+	int	val;
+
+	pthread_mutex_lock(&data->stop_lock);
+	val = data->stop;
+	pthread_mutex_unlock(&data->stop_lock);
+	return (val);
+}
+
+void	set_stop(t_data *data, int val)
+{
+	pthread_mutex_lock(&data->stop_lock);
+	data->stop = val;
+	pthread_mutex_unlock(&data->stop_lock);
 }

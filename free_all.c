@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvalien <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alvalien <alvalien@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 22:13:18 by alvalien          #+#    #+#             */
-/*   Updated: 2025/07/07 22:13:20 by alvalien         ###   ########.fr       */
+/*   Updated: 2025/07/09 10:38:40 by alvalien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	destroy_mutexes(t_data *data)
 	}
 	pthread_mutex_destroy(&data->print);
 	pthread_mutex_destroy(&data->meal_check);
+	pthread_mutex_destroy(&data->stop_lock);
 }
 
 void	cleanup(t_data *d)
