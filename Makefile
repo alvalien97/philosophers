@@ -1,4 +1,4 @@
-NAME = philosophers
+NAME = philo
 OBJS = ${SRCS:.c=.o}
 SRCS = main.c init.c routine.c utils.c monitor.c free_all.c
 

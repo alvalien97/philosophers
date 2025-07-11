@@ -6,7 +6,7 @@
 /*   By: alvalien <alvalien@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:15:56 by hzsurf            #+#    #+#             */
-/*   Updated: 2025/07/09 10:02:13 by alvalien         ###   ########.fr       */
+/*   Updated: 2025/07/11 12:32:30 by alvalien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_args(int ac, char **av)
 	{
 		if (atoi(av[i]) <= 0)
 		{
-			write(2, "Error in your arguments", 23);
+			write(2, "Error in your arguments\n", 23);
 			return (0);
 		}
 		i++;
