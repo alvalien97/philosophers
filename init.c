@@ -6,7 +6,7 @@
 /*   By: alvalien <alvalien@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 20:15:44 by hzsurf            #+#    #+#             */
-/*   Updated: 2025/07/09 10:18:47 by alvalien         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:53:05 by alvalien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	init_all(t_data *d, int ac, char **av)
 	else
 		d->max_meals = -1;
 	d->stop = 0;
+	d->full_count = 0;
 	d->forks = malloc(sizeof(pthread_mutex_t) * d->count);
 	d->philos = malloc(sizeof(t_philo) * d->count);
 	if (!d->forks || !d->philos || !init_mutexes(d))
