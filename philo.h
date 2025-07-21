@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <string.h>
 
 typedef struct s_data	t_data;
 
@@ -42,6 +43,7 @@ typedef struct s_data
 	int				stop;
 	int				full_count;
 	long			start;
+	pthread_mutex_t	count_mut;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 	pthread_mutex_t	meal_check;
@@ -60,5 +62,6 @@ void	cleanup(t_data *d);
 void	destroy_mutexes(t_data *data);
 int		get_stop(t_data *data);
 void	set_stop(t_data *data, int val);
+int		ft_atoi(const char *n);
 
 #endif

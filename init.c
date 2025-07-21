@@ -29,6 +29,8 @@ int	init_mutexes(t_data *data)
 		return (0);
 	if (pthread_mutex_init(&data->stop_lock, NULL))
 		return (0);
+	if (pthread_mutex_init(&data->count_mut, NULL))
+		return (0);
 	return (1);
 }
 
@@ -52,17 +54,12 @@ void	init_philos(t_data *d)
 
 int	init_all(t_data *d, int ac, char **av)
 {
-	d->count = atoi(av[1]);
-	if (d->count == 1)
-	{
-		write(2, "0 1 died\n", 9);
-		return (0);
-	}
-	d->die = atoi(av[2]);
-	d->eat = atoi(av[3]);
-	d->sleep = atoi(av[4]);
+	d->count = ft_atoi(av[1]);
+	d->die = ft_atoi(av[2]);
+	d->eat = ft_atoi(av[3]);
+	d->sleep = ft_atoi(av[4]);
 	if (ac == 6)
-		d->max_meals = atoi(av[5]);
+		d->max_meals = ft_atoi(av[5]);
 	else
 		d->max_meals = -1;
 	d->stop = 0;
@@ -72,5 +69,13 @@ int	init_all(t_data *d, int ac, char **av)
 	if (!d->forks || !d->philos || !init_mutexes(d))
 		return (0);
 	init_philos(d);
+	if (d->count == 1)
+	{
+		pthread_mutex_lock(&d->print);
+		printf("%d 1 died\n", d->die);
+		pthread_mutex_unlock(&d->print);
+		cleanup(d);
+		return (0);
+	}
 	return (1);
 }

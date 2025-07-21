@@ -12,28 +12,41 @@
 
 #include "philo.h"
 
+static int	check_one_philo(t_data *data, int i, long now)
+{
+	long	last_meal;
+
+	pthread_mutex_lock(&data->meal_check);
+	if (data->max_meals != -1 && data->philos[i].meals >= data->max_meals)
+	{
+		pthread_mutex_unlock(&data->meal_check);
+		return (0);
+	}
+	last_meal = data->philos[i].last_meal;
+	pthread_mutex_unlock(&data->meal_check);
+	if ((now - last_meal) > data->die)
+	{
+		pthread_mutex_lock(&data->print);
+		if (!get_stop(data))
+			printf("%ld %d died\n", now - data->start, i + 1);
+		set_stop(data, 1);
+		pthread_mutex_unlock(&data->print);
+		return (1);
+	}
+	return (0);
+}
+
 int	check_death(t_data *data)
 {
 	int		i;
 	long	now;
-	long	last_meal;
 
 	now = get_time();
 	i = 0;
 	while (i < data->count)
 	{
-		pthread_mutex_lock(&data->meal_check);
-		last_meal = data->philos[i].last_meal;
-		pthread_mutex_unlock(&data->meal_check);
-		if ((now - last_meal) > data->die)
-		{
-			pthread_mutex_lock(&data->print);
-			if (!get_stop(data))
-				printf("%ld %d died\n", now - data->start, i + 1);
-			set_stop(data, 1);
-			pthread_mutex_unlock(&data->print);
+		if (check_one_philo(data, i, now))
 			return (1);
-		}
 		i++;
 	}
 	return (0);
@@ -51,12 +64,12 @@ void	*monitor(void *arg)
 		pthread_mutex_lock(&data->meal_check);
 		if (data->max_meals != -1 && data->full_count == data->count)
 		{
-			data->stop = 1;
+			set_stop(data, 1);
 			pthread_mutex_unlock(&data->meal_check);
 			break ;
 		}
 		pthread_mutex_unlock(&data->meal_check);
-		usleep(1000);
+		usleep(50);
 	}
 	return (NULL);
 }

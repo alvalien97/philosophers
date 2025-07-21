@@ -12,6 +12,59 @@
 
 #include "philo.h"
 
+int	ft_atoi(const char *n)
+{
+	int	i;
+	int	sign;
+	int	value;
+
+	i = 0;
+	sign = 1;
+	value = 0;
+	while (n[i] == 32 || (n[i] >= 9 && n[i] <= 13))
+		i++;
+	if (n[i] == '+' || n[i] == '-')
+	{
+		if (n[i] == '-')
+			sign = sign * -1;
+		i++;
+	}
+	while (n[i] > 47 && n[i] < 58)
+	{
+		value = (value * 10) + ((int)n[i] - 48);
+		i++;
+	}
+	return (value * sign);
+}
+
+void	destroy_mutexes(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->count)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&data->print);
+	pthread_mutex_destroy(&data->meal_check);
+	pthread_mutex_destroy(&data->stop_lock);
+}
+
+void	cleanup(t_data *d)
+{
+	destroy_mutexes(d);
+	if (d->forks)
+	{
+		free(d->forks);
+	}
+	if (d->philos)
+	{
+		free(d->philos);
+	}
+}
+
 int	check_args(int ac, char **av)
 {
 	int	i;
@@ -44,8 +97,8 @@ int	main(int ac, char **av)
 	i = 0;
 	while (i < data.count)
 	{
-		pthread_create(&data.philos[i].thread, NULL,
-			philo_routine, &data.philos[i]);
+		pthread_create(&data.philos[i].thread, NULL, philo_routine,
+			&data.philos[i]);
 		i++;
 	}
 	pthread_create(&checker, NULL, monitor, &data);

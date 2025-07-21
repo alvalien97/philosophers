@@ -14,10 +14,14 @@
 
 long	get_time(void)
 {
-	struct timeval	tv;
+	static struct timeval	start;
+	struct timeval			tv;
 
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	if (!start.tv_sec && !start.tv_usec)
+		start = tv;
+	return (((tv.tv_sec - start.tv_sec) * 1000) + ((tv.tv_usec - start.tv_usec)
+			/ 1000));
 }
 
 void	ft_usleep(long time)
@@ -26,15 +30,14 @@ void	ft_usleep(long time)
 
 	start = get_time();
 	while (get_time() - start < time)
-		usleep(500);
+		usleep(100);
 }
 
 void	print_action(t_philo *ph, char *str)
 {
 	pthread_mutex_lock(&ph->data->print);
-	if (!ph->data->stop)
-		printf("%ld %d %s\n",
-			get_time() - ph->data->start, ph->id + 1, str);
+	if (!get_stop(ph->data))
+		printf("%ld %d %s\n", get_time() - ph->data->start, ph->id + 1, str);
 	pthread_mutex_unlock(&ph->data->print);
 }
 
